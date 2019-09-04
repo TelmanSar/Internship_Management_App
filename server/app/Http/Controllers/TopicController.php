@@ -23,7 +23,7 @@ class TopicController extends Controller
      */
     public function create()
     {
-        //
+       //added some functionality
     }
 
     /**
