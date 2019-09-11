@@ -24,9 +24,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login()
     {
-
+        //dd(Hash::make( $request['password'])); Request $request
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
@@ -77,10 +77,14 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+//        $currentUser = \auth()->user();
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        ],
+            200,
+        ['authorization' => 'bearer '.$token]
+            );
     }
 }

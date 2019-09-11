@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles/index.css'
 
 const store = configureStore();
+window.store = store;
 
 ReactDOM.render(<LoginPage store={store}/>, document.getElementById('root'));
 
