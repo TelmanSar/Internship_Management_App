@@ -26,7 +26,6 @@ class AuthController extends Controller
      */
     public function login()
     {
-        //dd(Hash::make( $request['password'])); Request $request
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
@@ -77,14 +76,12 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-//        $currentUser = \auth()->user();
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ],
+        return response()->json(
+            [],
             200,
-        ['authorization' => 'bearer '.$token]
-            );
+        [
+            'authorization' => 'bearer '.$token,
+            'token-expire-time' => auth()->factory()->getTTL() * 60,
+         ]);
     }
 }
