@@ -10,13 +10,7 @@ export const startLogin = (userInfo = {}) => {
     return (dispatch) => {
         return axios.post(
             `${API_BASE_URL}/auth/login`,
-            userInfo,
-            {
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            })
+            userInfo)
             .then(data => {
                 return dispatch(login({
                     token: data['access_token']

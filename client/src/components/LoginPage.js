@@ -2,23 +2,30 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {startLogin} from '../ations/authentication'
 
-
-
  class LoginPage extends Component {
     state = {
-        email: "TelmanSaroyan@gmail.com",
-        password: "123456"
+        userCredentials:{
+            email: "",
+            password: ""
+        },
+        loginDisabled: !(this.userCredentials.email && this.userCredentials.email),
     };
 
     handleChange = event => {
         this.setState({
-            [event.target.name]: event.target.value
+            userCredentials: {
+                [event.target.name]: event.target.value
+            }
+
         });
     };
 
     handleSubmit = event => {
         event.preventDefault();
-        this.props.startLogin(this.state)
+        this.setState({
+            loginDisabled: true
+        });
+        this.props.startLogin(this.state.userCredentials)
     };
 
 
@@ -48,6 +55,7 @@ import {startLogin} from '../ations/authentication'
                             type="submit"
                             className="fadeIn fourth"
                             value="Log In"
+                            disabled={this.state.loginDisabled}
                         />
                     </form>
                 </div>

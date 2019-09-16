@@ -10,6 +10,7 @@ export function runInterceptor() {
             request.headers['authorization'] = `Bearer ${token}`;
         }
         request.headers['Content-Type'] = 'application/json';
+        request.headers['Accept'] = 'application/json';
         return request;
     });
 
