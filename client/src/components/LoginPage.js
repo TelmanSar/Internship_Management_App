@@ -2,21 +2,25 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {startLogin} from '../ations/authentication'
 
- class LoginPage extends Component {
+class LoginPage extends Component {
+
     state = {
-        userCredentials:{
-            email: "",
-            password: ""
-        },
-        loginDisabled: !(this.userCredentials.email && this.userCredentials.email),
+        email: "",
+        password: "",
+        loginDisabled: true
     };
 
     handleChange = event => {
-        this.setState({
-            userCredentials: {
-                [event.target.name]: event.target.value
-            }
+        if (this.state.email.length > 0 && this.state.password.length > 0) {
+            this.setState({loginDisabled: false})
+        }
 
+        this.setState({
+            [event.target.name]: event.target.value
+        }, () => {
+            if (this.state.email.length > 0 && this.state.password.length > 0) {
+                this.setState({loginDisabled: false})
+            }
         });
     };
 
@@ -25,9 +29,11 @@ import {startLogin} from '../ations/authentication'
         this.setState({
             loginDisabled: true
         });
-        this.props.startLogin(this.state.userCredentials)
+        this.props.startLogin({
+            email: this.state.email,
+            password: this.state.password
+        })
     };
-
 
 
     render() {
