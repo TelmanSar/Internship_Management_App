@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\Topic;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Validator;
 
-class PostController extends Controller
+class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        $models = Post::query()->get();
-        return $models;
+        return Topic::all();
     }
 
 
@@ -28,10 +27,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
-            'title' => 'required|string|max:100',
-            'description' => 'required',
+
+        $validator = Validator::make($request->all(), [
+
+            'topic_name' => 'required|unique:topics,topic_name|string|max:100',
+            'topic_description' => 'required|unique:topics,topic_description|string|max:500',
+            'available_at' => 'required|date|date_format:Y-m-d H:i:s|after:01 June 2020'
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation failed',
@@ -39,13 +42,10 @@ class PostController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-        $model = new Post();
-        $model->title = $request->get('title');
-        $model->description = $request->get('description');
-        $model->save();
+        Topic::create($request->all());
 
         return response()->json([
-            'message' => 'Post Saved Successfully',
+            'message' => 'Topic Saved Successfully',
             'status' => 'success',
         ]);
     }
@@ -54,14 +54,14 @@ class PostController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function show($id)
     {
-        $model = Post::query()->find($id);
+        $model = Topic::query()->find($id);
         if (!$model) {
             return response()->json([
-                'message' => 'Post does not exist',
+                'message' => 'Topic does not exist',
                 'status' => 'fail',
             ]);
         }
@@ -78,19 +78,33 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $model = Post::query()->find($id);
+        $model = Topic::query()->find($id);
         if (!$model) {
             return response()->json([
-                'message' => 'Post does not exist',
+                'message' => 'Topic does not exist',
                 'status' => 'fail',
             ]);
         }
-        $model->title = $request->get('title');
-        $model->description = $request->get('description');
-        $model->save();
+
+        $validator = Validator::make($request->all(), [
+
+            'topic_name' => 'required|string|max:100',
+            'topic_description' => 'required|string|max 500',
+            'available_at' => 'required|date_format:d/m/Y H:i:s'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'status' => 'failed',
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $model->update($request->all());
 
         return response()->json([
-            'message' => 'Post Updated Successfully',
+            'message' => 'Topic Updated Successfully',
             'status' => 'success',
         ]);
     }
@@ -98,22 +112,23 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        $model = Post::query()->find($id);
+        $model = Topic::query()->find($id);
         if (!$model) {
             return response()->json([
-                'message' => 'Post does not exist',
+                'message' => 'Topic does not exist',
                 'status' => 'fail',
             ]);
         }
         $model->delete();
 
         return response()->json([
-            'message' => 'Post Deleted Successfully',
+            'message' => 'Topic deleted Successfully',
             'status' => 'success',
         ]);
     }

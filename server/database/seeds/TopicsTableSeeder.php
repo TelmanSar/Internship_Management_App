@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
-class UsersTableSeeder extends Seeder
+class TopicsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,19 +12,17 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-
-        DB::table('users')->insert([
-            'name' => "Telmahttp://127.0.0.1:8000/apin",
-            'email' => "TelmanSaroyan".'@gmail.com',
-            'password' => Hash::make('123456'),
+        DB::table('topics')->insert([
+            'topic_name' => "PHP basics",
+            'topic_description' => 'This topic contains fundamentals of PHP',
+            'available_at' => '2020-11-02 20:10:10',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);
-        DB::table('users')->insert([
-            'name' => "Levon",
-            'email' => "LevonAyvazyan".'@gmail.com',
-            'password' => Hash::make('password2'),
+        DB::table('topics')->insert([
+            'topic_name' => "MYSQL",
+            'topic_description' => 'This topic contains fundamentals of MYSQL',
+            'available_at' => '2021-11-02 20:10:10',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);
