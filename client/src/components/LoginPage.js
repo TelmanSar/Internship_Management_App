@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {startLogin} from '../ations/authentication'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {startLogin} from '../actions/authentication';
 
 class LoginPage extends Component {
 
@@ -72,7 +72,7 @@ class LoginPage extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    startLogin: userInfo => dispatch(startLogin(userInfo))
+    startLogin: userCredentials => dispatch(startLogin(userCredentials))
 });
 
 export default connect(null, mapDispatchToProps)(LoginPage);

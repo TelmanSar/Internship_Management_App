@@ -12,6 +12,14 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/','UserController@index');
+    Route::get('{id}', 'UserController@show');
+    Route::post('/', 'UserController@store');
+    Route::put('{id}', 'UserController@update');
+    Route::delete('{id}', 'UserController@destroy');
+});
+
 Route::group(['prefix' => 'topics'], function () {
     Route::get('/','TopicController@index');
     Route::get('{id}', 'TopicController@show');

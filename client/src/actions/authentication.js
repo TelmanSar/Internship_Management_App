@@ -1,4 +1,4 @@
-import {API_BASE_URL} from '../config/config'
+import {API_BASE_URL} from '../data/config';
 import axios from 'axios';
 
 const login = (token) => ({
@@ -6,11 +6,11 @@ const login = (token) => ({
     token
 });
 
-export const startLogin = (userInfo = {}) => {
+export const startLogin = (userCredentials = {}) => {
     return (dispatch) => {
         return axios.post(
             `${API_BASE_URL}/auth/login`,
-            userInfo)
+            userCredentials)
             .then(data => {
                 return dispatch(login({
                     token: data['access_token']
