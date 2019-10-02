@@ -7,7 +7,7 @@ export function runInterceptor() {
 
         const token = localStorage.getItem('access-token');
         if (token) {
-            request.headers['authorization'] = `Bearer ${token}`;
+            request.headers['authorization'] = `${token}`;
         }
         request.headers['Content-Type'] = 'application/json';
         request.headers['Accept'] = 'application/json';

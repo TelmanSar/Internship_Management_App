@@ -55,7 +55,9 @@ function UsersTable(props) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const startGetUsers = props.startGetUsers;
-    useEffect(()=>{startGetUsers()}, [startGetUsers]);
+    useEffect(() => {
+        startGetUsers()
+    }, [startGetUsers]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -79,7 +81,12 @@ function UsersTable(props) {
                     <div className={classes.spacer}/>
                     <div className={classes.actions}>
                         <Tooltip title="Add user">
-                            <Fab color="primary" aria-label="add" className={classes.fab} size="small">
+                            <Fab color="primary"
+                                 aria-label="add"
+                                 className={classes.fab}
+                                 size="small" component={Link}
+                                 to={'create_user'}
+                            >
                                 <AddIcon/>
                             </Fab>
                         </Tooltip>
@@ -109,24 +116,23 @@ function UsersTable(props) {
                                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                         {userColumns.map(column => {
                                             const value = row[column.id];
-                                            if (column.id === 'edit') {
-                                                return <TableCell key={column.id}>
-                                                    <IconButton color="primary" component={Link} to={`edit_user/${row.id}`}>
-                                                        <EditIcon/>
-                                                    </IconButton>
+                                            if (column.id === 'action') {
+                                                return <TableCell key={column.id} style={{display: 'flex'}}>
+                                                        <IconButton color="primary" component={Link}
+                                                                    to={`edit_user/${row.id}`}>
+                                                            <EditIcon/>
+                                                        </IconButton>
+                                                        <IconButton color="secondary" onClick={removeUser}>
+                                                            <DeleteIcon/>
+                                                        </IconButton>
                                                 </TableCell>
-                                            } else if (column.id === 'remove') {
-                                                return <TableCell key={column.id}>
-                                                    <IconButton color="secondary" onClick={removeUser}>
-                                                        <DeleteIcon/>
-                                                    </IconButton>
-                                                </TableCell>
+                                            } else {
+                                                return (
+                                                    <TableCell key={column.id}>
+                                                        {value}
+                                                    </TableCell>
+                                                );
                                             }
-                                            return (
-                                                <TableCell key={column.id}>
-                                                    {value}
-                                                </TableCell>
-                                            );
                                         })}
                                     </TableRow>
                                 );
@@ -163,7 +169,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     startGetUsers: () => dispatch(startGetUsers()),
     startRemoveUser: (id) => dispatch(startRemoveUser({
-        id:id
+        id: id
     }))
 });
 

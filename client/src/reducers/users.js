@@ -8,7 +8,7 @@ export default (state = usersReducerDefaultState, action) => {
                 action.user
             ];
         case 'REMOVE_USER':
-            return state.filter(({ id }) => id !== action.id);
+            return state.filter(({id}) => id !== action.id);
         case 'EDIT_USER':
             return state.map((user) => {
                 if (user.id === action.id) {

@@ -5,6 +5,7 @@ import HomePage from '../components/HomePage'
 import UsersEditPage from '../components/UsersEditPage'
 import TopicDashboardExpensePage from '../components/TopicDashboardExpensePage'
 import UsersTable from "../components/UsersTable";
+import UsersAddPage from "../components/UsersAddPage";
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
 import { Router, Switch } from 'react-router-dom'
@@ -18,6 +19,7 @@ const AppRouter = () => (
                 <PublicRoute path="/" component={LoginPage} exact={true} />
                 <PrivateRoute path="/home" component={HomePage}/>
                 <PrivateRoute path="/users" component={UsersTable} />
+                <PrivateRoute path="/create_user" component={UsersAddPage} />
                 <PrivateRoute path="/edit_user/:id" component={UsersEditPage} />
                 <PrivateRoute path="/topics" component={TopicDashboardExpensePage} />
             </Switch>

@@ -12,7 +12,7 @@ import MenuBookSharpIcon from '@material-ui/icons/MenuBookSharp';
 import PeopleAltSharpIcon from '@material-ui/icons/PeopleAltSharp';
 import HomeIcon from '@material-ui/icons/Home';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
     drawer: {

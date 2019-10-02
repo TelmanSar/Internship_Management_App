@@ -1,9 +1,8 @@
 export const userColumns = [
-    { id: 'name', label: 'Name', minWidth: 50 },
-    { id: 'lastname', label: 'Lastname', minWidth: 50 },
-    { id: 'email', label: 'Email', minWidth: 150 },
-    { id: 'password', label: 'Password', minWidth: 50 },
-    { id: 'role', label: 'Role', minWidth: 50 },
-    { id: 'edit', label: 'Edit', minWidth: 10 },
-    { id: 'remove', label: 'Remove', minWidth: 10 }
+    { id: 'name', label: 'Name', minWidth: 40 },
+    { id: 'lastname', label: 'Lastname', minWidth: 40 },
+    { id: 'email', label: 'Email', minWidth: 100 },
+    { id: 'password', label: 'Password', minWidth: 40 },
+    { id: 'role', label: 'Role', minWidth: 40 },
+    { id: 'action', label: 'Edit/Remove', minWidth: 10 },
 ];

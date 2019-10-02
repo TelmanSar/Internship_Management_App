@@ -1,6 +1,5 @@
 import {API_BASE_URL} from '../data/config';
 import axios from 'axios';
-import {startLogin} from "./authentication";
 
 const addUser = (user) => ({
     type: 'ADD_USER',
@@ -9,7 +8,7 @@ const addUser = (user) => ({
 
 export const startAddUser = (user) => {
     return (dispatch) => {
-        return axios.post(API_BASE_URL, {body: user})
+        return axios.post(API_BASE_URL + '/users', {... user})
             .then(() => dispatch(addUser({
                     ...user
                 }))
@@ -42,9 +41,11 @@ const updateUser = (id, updates) => ({
 });
 
 export const startUpdateUser = (id, updates) => {
+    console.log(updates);
+    
     return (dispatch) => {
         return axios.put(API_BASE_URL + '/users/' + id, {
-            body: updates
+             ...updates
         }).then(() => {
             dispatch(updateUser(id, updates));
         });

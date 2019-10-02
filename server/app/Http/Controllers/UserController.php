@@ -32,9 +32,9 @@ class UserController extends Controller
 
             'name' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email|string|max:100',
+            'email' => 'required|email|unique:users|string|max:100',
             'role' => 'required|string|max:50',
-            'password' => 'required|unique|string|max:30',
+            'password' => 'required|string|max:30',
         ]);
 
         if ($validator->fails()) {
@@ -90,12 +90,11 @@ class UserController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-
             'name' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email|string|max:100',
+            'email' => 'required|email|string|max:100',
             'role' => 'required|string|max:50',
-            'password' => 'required|unique|string|max:30',
+            'password' => 'required|string|max:30',
         ]);
 
         if ($validator->fails()) {

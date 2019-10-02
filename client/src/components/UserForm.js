@@ -21,17 +21,21 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function UserForm(props) {
-    let {
-        values: {id, name,lastname, email, password, role },
+    const {
+        values: {name, lastname, email, password, role },
         errors,
         touched,
         handleChange,
+        handleSubmit,
         isValid,
-        setFieldTouched
+        setFieldTouched,
+        buttonValue
     } = props;
+
     const classes = useStyles();
 
     const change = (name, e) => {
+        e.preventDefault()
         e.persist();
         handleChange(e);
         setFieldTouched(name, true, false);
@@ -39,8 +43,7 @@ export default function UserForm(props) {
 
     return (
         <form
-            onSubmit={() => {
-            }}
+            onSubmit={handleSubmit}
             className={classes.root}
         >
             <div>
@@ -116,7 +119,7 @@ export default function UserForm(props) {
                 color="primary"
                 className={classes.textField}
             >
-                Submit
+                {buttonValue}
             </Button>
         </form>
     )

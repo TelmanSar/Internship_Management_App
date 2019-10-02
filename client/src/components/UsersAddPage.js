@@ -1,20 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {makeStyles} from "@material-ui/core";
 import {Formik} from 'formik';
 import UserForm from './UserForm';
 import {object as yupObject, string as yupString} from "yup";
 import {connect} from "react-redux";
-import {startUpdateUser} from "../actions/users";
-import {startGetUser} from "../actions/currentUser";
-
+import {startAddUser} from "../actions/users";
 
 const useStyles = makeStyles(theme => ({
+    toolbar: theme.mixins.toolbar,
     content: {
         display: 'flex',
         flexDirection: "column",
         padding: theme.spacing(3),
     },
-    toolbar: theme.mixins.toolbar,
 }));
 
 const validationSchema = yupObject({
@@ -29,33 +27,29 @@ const validationSchema = yupObject({
     role: yupString("Select a lastname").required("role is required"),
 });
 
-function UsersEditPage(props) {
+function UsersAddPage(props) {
     const classes = useStyles();
-    const userID = +props.match.params.id;
-    const getUser = props.startGetUser;
-    useEffect(() => {
-        getUser(userID);
-    }, []);
+
+    const values = {
+        name: "",
+        lastname: "",
+        email: "",
+        password: "",
+        role: ""
+    };
 
     function handleSubmit(values) {
         const {
-            id,
             name,
             lastname,
             email,
             password,
             role
         } = values;
-        const updates = {name, lastname, email, password, role};
-        props.startUpdateUser(id, updates);
+        const userCredentials = {name, lastname, email, password, role};
+        props.startAddUser(userCredentials);
         props.history.push("/users");
     }
-
-    const [values, setValues] = useState(false);
-
-    useEffect(() => {
-        setValues(props.user);
-    }, [props.user]);
 
     return (
         < main
@@ -64,30 +58,23 @@ function UsersEditPage(props) {
                 className={classes.toolbar}
             />
             <div>
-                <h1>Edit Form</h1>{
-                values.hasOwnProperty('name') && (
-                    <Formik
-                        initialValues={values}
-                        validationSchema={validationSchema}
-                        onSubmit={values => handleSubmit(values)}
-                        isInitialValid={true}
-                        render={props => <UserForm {...props} buttonValue={'Update'}/>}
-                    />
-                )
-            }
+                <h1>Add new User Form</h1>
+                <Formik
+                    initialValues={values}
+                    validationSchema={validationSchema}
+                    onSubmit={values => handleSubmit(values)}
+                    render={props => <UserForm {...props} buttonValue={'Create User'}/>}
+                />
             </div>
         </main>
     )
+
 }
 
-const mapStateToProps = (state) => ({
-    user: state.user
-
-});
-
 const mapDispatchToProps = dispatch => ({
-    startUpdateUser: (id, updates) => dispatch(startUpdateUser(id, updates)),
-    startGetUser: userID => dispatch(startGetUser(userID))
+    startAddUser: (userCredentials) => dispatch(startAddUser(userCredentials)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersEditPage);
+export default connect(null, mapDispatchToProps)(UsersAddPage);
+
+
