@@ -7,17 +7,20 @@ export const PublicRoute = ({
                                 component: Component,
                                 ...rest
                             }) => (
-    <Route {...rest} component={(props) => (
-        true ? (
-            <Redirect to="/home" />
-        ) : (
-            <Component {...props} />
+    <Route {...rest} component={(props) => {
+       return (
+           localStorage.getItem('access-token') ? (
+                <Redirect to="/home"/>
+            ) : (
+                <Component {...props} />
+            )
         )
-    )} />
+    }
+    } />
 );
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: !!state.auth.uid
+    isAuthenticated: !!state.auth.id
 });
 
 export default connect(mapStateToProps)(PublicRoute);

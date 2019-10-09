@@ -32,6 +32,7 @@ export default function Sidebar(props) {
     const classes = useStyles();
     const role = "admin";
 
+const pathname = props.location.pathname
     const drawer = (
         <div>
             <div className={classes.toolbar}/>
@@ -39,15 +40,15 @@ export default function Sidebar(props) {
 
             {(role === 'admin' || role === "superAdmin") ? (
                     <List>
-                        <ListItem button key={'Home'} component={Link} to='/home'>
+                        <ListItem button key={'Home'} component={Link} to='/home'  selected={'/home'===pathname}>
                             <ListItemIcon><HomeIcon/></ListItemIcon>
                             <ListItemText primary='Home'/>
                         </ListItem>
-                        <ListItem button key={'Users'} component={Link} to='/users'>
+                        <ListItem button key={'Users'} component={Link} to='/users' selected={'/users'===pathname}>
                             <ListItemIcon><PeopleAltSharpIcon/></ListItemIcon>
                             <ListItemText primary='Users'/>
                         </ListItem>
-                        <ListItem button key="Topics" component={Link} to='/topics'>
+                        <ListItem button key="Topics" component={Link} to='/topics' selected={'/topics'===pathname}>
                             <ListItemIcon><MenuBookSharpIcon/></ListItemIcon>
                             <ListItemText primary="Topics"/>
                         </ListItem>

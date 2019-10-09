@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import {userColumns} from '../data/columns';
+import {userColumns} from '../general/columns';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
     actions: {
         color: theme.palette.text.secondary,
     },
+    fab: {
+        margin: theme.spacing(2),
+    },
     tableWrapper: {
         overflow: 'auto',
         width: '100%'
@@ -42,9 +45,6 @@ const useStyles = makeStyles(theme => ({
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-    },
-    fab: {
-        margin: theme.spacing(2),
     },
     toolbar: theme.mixins.toolbar,
 }));
@@ -84,7 +84,8 @@ function UsersTable(props) {
                             <Fab color="primary"
                                  aria-label="add"
                                  className={classes.fab}
-                                 size="small" component={Link}
+                                 size="small"
+                                 component={Link}
                                  to={'create_user'}
                             >
                                 <AddIcon/>

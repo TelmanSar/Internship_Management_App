@@ -2,8 +2,9 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import authReducer from '../reducers/authentication';
 import usersReducer from '../reducers/users';
-import currentUser from '../reducers/currentUser';
-import {runInterceptor}from '../data/config';
+import topicsReducer from '../reducers/topics';
+import editablesReducer from '../reducers/editables';
+import {runInterceptor}from '../general/config';
 
 runInterceptor();
 
@@ -12,7 +13,8 @@ export default () => {
         combineReducers({
             auth: authReducer,
             users: usersReducer,
-            user: currentUser
+            topics: topicsReducer,
+            editables: editablesReducer
         }),
         applyMiddleware(thunk)
     );

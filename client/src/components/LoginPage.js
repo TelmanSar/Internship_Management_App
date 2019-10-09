@@ -1,73 +1,90 @@
-import React, {Component} from 'react';
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 import {connect} from 'react-redux';
+import LoginForm from './LoginForm'
 import {startLogin} from '../actions/authentication';
+import {Formik} from "formik";
+import {object as yupObject, string as yupString} from "yup";
+import Background from '../images/facebook_profile_image.png';
 
-class LoginPage extends Component {
 
-    state = {
+const useStyles = makeStyles(theme => ({
+    root: {
+        height: '100vh',
+    },
+    image: {
+        backgroundImage: `url(${Background})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    },
+    paper: {
+        margin: theme.spacing(8, 4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
+
+}));
+
+
+const validationSchema = yupObject({
+    email: yupString("Enter your email")
+        .email("Enter a valid email")
+        .required("Email is required"),
+    password: yupString("")
+        .required("Enter your password"),
+});
+
+function LoginPage(props) {
+    const classes = useStyles();
+
+    const values = {
         email: "",
         password: "",
-        loginDisabled: true
     };
 
-    handleChange = event => {
-        if (this.state.email.length > 0 && this.state.password.length > 0) {
-            this.setState({loginDisabled: false})
-        }
-
-        this.setState({
-            [event.target.name]: event.target.value
-        }, () => {
-            if (this.state.email.length > 0 && this.state.password.length > 0) {
-                this.setState({loginDisabled: false})
-            }
-        });
-    };
-
-    handleSubmit = event => {
-        event.preventDefault();
-        this.setState({
-            loginDisabled: true
-        });
-        this.props.startLogin({
-            email: this.state.email,
-            password: this.state.password
-        })
-    };
-
-
-    render() {
-        return (
-            <div className="wrapper fadeInDown">
-                <div id="formContent">
-                    <form onSubmit={this.handleSubmit}>
-                        <input
-                            type="email"
-                            id="login"
-                            className="fadeIn second"
-                            name="email"
-                            placeholder="login"
-                            onChange={this.handleChange}
-                        />
-                        <input
-                            type="password"
-                            id="password"
-                            className="fadeIn third"
-                            name="password"
-                            placeholder="password"
-                            onChange={this.handleChange}
-                        />
-                        <input
-                            type="submit"
-                            className="fadeIn fourth"
-                            value="Log In"
-                            disabled={this.state.loginDisabled}
-                        />
-                    </form>
-                </div>
-            </div>
-        )
+    function handleSubmit(values) {
+        const {
+            email,
+            password
+        } = values;
+        const userCredentials = {email, password};
+        props.startLogin(userCredentials);
     }
+
+    return (
+        <Grid container component="main" className={classes.root}>
+            <CssBaseline />
+            <Grid item xs={false} sm={4} md={7} className={classes.image} />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign in
+                    </Typography>
+                    <Formik
+                        initialValues={values}
+                        validationSchema={validationSchema}
+                        onSubmit={values => handleSubmit(values)}
+                        render={props => <LoginForm {...props}/>}
+                    />
+                </div>
+            </Grid>
+        </Grid>
+    );
 }
 
 

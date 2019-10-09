@@ -1,19 +1,23 @@
-import {API_BASE_URL} from '../data/config';
+import {API_BASE_URL} from '../general/config';
 import axios from 'axios';
 
-const login = (token) => ({
-    type: 'LOGIN_USER',
-    token
-});
+const login = (authenticatedUser) => {
+    return {
+        type: 'LOGIN_USER',
+        authenticatedUser
+    }
+};
 
 export const startLogin = (userCredentials = {}) => {
     return (dispatch) => {
         return axios.post(
             `${API_BASE_URL}/auth/login`,
             userCredentials)
-            .then(data => {
+            .then(
+                () => (axios.get(`${API_BASE_URL}/auth/me`))
+            ).then(meResponse => {
                 return dispatch(login({
-                    token: data['access_token']
+                    ...meResponse.data
                 }))
             })
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -33,7 +34,7 @@ class UserController extends Controller
             'name' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
             'email' => 'required|email|unique:users|string|max:100',
-            'role' => 'required|string|max:50',
+            'role' => 'required|integer|between:1,3',
             'password' => 'required|string|max:30',
         ]);
 
@@ -45,7 +46,15 @@ class UserController extends Controller
             ]);
         }
 
-        User::create($request->all());
+        $model = new User();
+        $model->name = $request->get('name');
+        $model->lastname = $request->get('lastname');
+        $model->email = $request->get('email');
+        $model->role_id = $request->get('role_id');
+        $model->password = Hash::make($request->get('password'));
+        $model->save();
+
+
 
         return response()->json([
             'message' => 'User Saved Successfully',
@@ -104,8 +113,12 @@ class UserController extends Controller
                 'errors' => $validator->errors()
             ]);
         }
-
-        $model->update($request->all());
+        $model->name = $request->get('name');
+        $model->lastname = $request->get('lastname');
+        $model->email = $request->get('email');
+        $model->role_id = $request->get('role_id');
+        $model->password = Hash::make($request->get('password'));
+        $model->save();
 
         return response()->json([
             'message' => 'User Updated Successfully',

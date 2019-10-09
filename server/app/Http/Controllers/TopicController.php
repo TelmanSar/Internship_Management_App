@@ -32,7 +32,7 @@ class TopicController extends Controller
 
             'topic_name' => 'required|unique:topics,topic_name|string|max:100',
             'topic_description' => 'required|unique:topics,topic_description|string|max:500',
-            'available_at' => 'required|date|date_format:Y-m-d H:i:s|after:01 June 2020'
+            'available_at' => 'required|date|date_format:Y-m-d H:i'
         ]);
 
         if ($validator->fails()) {
