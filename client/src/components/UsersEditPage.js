@@ -32,10 +32,10 @@ const validationSchema = yupObject({
 
 function UsersEditPage(props) {
     const classes = useStyles();
-    const userID = +props.match.params.id;
+    const userId = +props.match.params.id;
     const getUser = props.startGetUser;
     useEffect(() => {
-        getUser(userID);
+        getUser(userId);
     }, []);
 
     function handleSubmit(values) {
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     startUpdateUser: (id, updates) => dispatch(startUpdateUser(id, updates)),
-    startGetUser: userID => dispatch(startGetUser(userID))
+    startGetUser: userId => dispatch(startGetUser(userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersEditPage);

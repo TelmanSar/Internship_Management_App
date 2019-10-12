@@ -5,6 +5,7 @@ import TopicForm from './TopicForm';
 import {object as yupObject, string as yupString, date as yupDate} from "yup";
 import {connect} from "react-redux";
 import {startAddTopic} from "../actions/topics";
+import * as moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
     toolbar: theme.mixins.toolbar,
@@ -16,30 +17,30 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const validationSchema = yupObject({
-    topicName: yupString("Please write name for topic").required("Name is required"),
-    topicDescription: yupString("Please write description for topic").required("Description is required"),
-    availableAt: yupDate("Please specify the start date for topic").required('Start date is required')
+    name: yupString("Please write name for topic").required("Name is required"),
+    description: yupString("Please write description for topic").required("Description is required"),
+    schedule: yupDate("Please specify the start date for topic").required('Start date is required')
 });
 
 function TopicsAddPage(props) {
     const classes = useStyles();
 
     const values = {
-        topicName: "",
-        topicDescription: "",
-        availableAt: new Date()
+        name: "",
+        description: "",
+        schedule: new Date()
     };
 
     function handleSubmit(values) {
-        const {
-            topicName,
-            topicDescription,
-            availableAt,
-
+        let {
+            name,
+            description,
+            schedule,
         } = values;
-        const userCredentials = {topicName, topicDescription, availableAt};
-        props.startAddTopic(userCredentials);
-        props.history.push("/topics");
+        schedule = moment.utc(schedule).format('YYYY-MM-DD HH:mm:ss');
+        const topicDetails = {name, description, schedule};
+        props.startAddTopic(topicDetails);
+         props.history.push("/topics");
     }
 
     return (
@@ -62,7 +63,7 @@ function TopicsAddPage(props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-    startAddTopic: (userCredentials) => dispatch(startAddTopic(userCredentials)),
+    startAddTopic: (topicDetails) => dispatch(startAddTopic(topicDetails)),
 });
 
 export default connect(null, mapDispatchToProps)(TopicsAddPage);

@@ -16,7 +16,7 @@ class CreateRolesTable extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('role_name');
+            $table->string('name');
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

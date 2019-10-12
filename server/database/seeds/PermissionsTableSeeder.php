@@ -14,31 +14,31 @@ class PermissionsTableSeeder extends Seeder
     public function run()
     {   //user related permissions
         DB::table('permissions')->insert([
-            'permission_name' => "Get users",
+            'name' => "Get users",
             'slug' => "get_users",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Get user",
+            'name' => "Get user",
             'slug' => "get_user",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Delete user",
+            'name' => "Delete user",
             'slug' => "delete_user",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Add user",
+            'name' => "Add user",
             'slug' => "add_user",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Update user",
+            'name' => "Update user",
             'slug' => "update_user",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
@@ -46,31 +46,31 @@ class PermissionsTableSeeder extends Seeder
 
         //Topic related permissions
         DB::table('permissions')->insert([
-            'permission_name' => "Get topics",
+            'name' => "Get topics",
             'slug' => "get_topics",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Get topic",
+            'name' => "Get topic",
             'slug' => "get_topic",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Delete topic",
+            'name' => "Delete topic",
             'slug' => "delete_topic",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Add topic",
+            'name' => "Add topic",
             'slug' => "add_topic",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Update topic",
+            'name' => "Update topic",
             'slug' => "update_topic",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
@@ -79,31 +79,31 @@ class PermissionsTableSeeder extends Seeder
 
         //Lesson related permissions
         DB::table('permissions')->insert([
-            'permission_name' => "Get lessons",
+            'name' => "Get lessons",
             'slug' => "get_lessons",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Get lesson",
+            'name' => "Get lesson",
             'slug' => "get_lesson",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Delete lesson",
+            'name' => "Delete lesson",
             'slug' => "delete_lesson",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Add lesson",
+            'name' => "Add lesson",
             'slug' => "add_lesson",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()
         ]);
         DB::table('permissions')->insert([
-            'permission_name' => "Update lesson",
+            'name' => "Update lesson",
             'slug' => "update_lesson",
             'created_at' => Carbon::now()->toDateTimeString(),
             'updated_at' => Carbon::now()->toDateTimeString()

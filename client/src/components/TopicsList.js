@@ -14,6 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import {startGetTopics, startRemoveTopic} from "../actions/topics";
 import {connect} from "react-redux";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -81,21 +82,29 @@ function TopicsList(props) {
                 </Container>
 
                 {
-                    props.topics.map(topic=>(
-                        <ExpansionPanel expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                    props.topics.map(topic=> (
+                        <ExpansionPanel key={topic.id} expanded={expanded === `panel${topic.id}`} onChange={handleChange(`panel${topic.id}`)}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon/>}
-                                aria-controls="panel1bh-content"
-                                id="panel1bh-header"
+                                aria-controls={`panel${topic.id}bh-content`}
+                                id={`panel${topic.id}bh-header`}
                             >
-                                <Typography className={classes.heading}>General settings</Typography>
+                                <Typography className={classes.heading}>{topic['name']}</Typography>
                                 <Typography className={classes.secondaryHeading}>I am an expansion panel</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <Typography>
-                                    Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-                                    maximus est, id dignissim quam.
+                                    {topic['description']}
                                 </Typography>
+                                <IconButton color="primary" component={Link}
+                                            to={`edit_topic/${topic.id}`}>
+                                    <EditIcon/>
+                                </IconButton>
+                                <IconButton color="secondary" onClick={() => {
+                                    props.startRemoveTopic(topic.id)
+                                }}>
+                                    <DeleteIcon/>
+                                </IconButton>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     ))

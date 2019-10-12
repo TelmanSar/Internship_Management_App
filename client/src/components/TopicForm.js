@@ -34,7 +34,7 @@ const DatePickerField = ({ field, form, ...other }) => {
 };
 export default function TopicForm(props) {
     const {
-        values: {topicName, topicDescription},
+        values: {name, description},
         errors,
         touched,
         handleChange,
@@ -59,28 +59,28 @@ export default function TopicForm(props) {
 
             <TextField
                 id='topicName'
-                name='topicName'
+                name='name'
                 label='Name'
-                helperText={touched.topicName ? errors.topicName : ""}
-                error={touched.topicName && Boolean(errors.topicName)}
+                helperText={touched.name ? errors.name : ""}
+                error={touched.name && Boolean(errors.name)}
                 className={classes.textField}
-                value={topicName}
-                onChange={change.bind(this, 'topicName')}
+                value={name}
+                onChange={change.bind(this, 'name')}
             />
 
             <TextField
                 id='topicDescription'
-                name='topicDescription'
+                name='description'
                 label='Description'
-                helperText={touched.topicDescription ? errors.topicDescription : ""}
-                error={touched.topicDescription && Boolean(errors.topicDescription)}
+                helperText={touched.description ? errors.description : ""}
+                error={touched.description && Boolean(errors.description)}
                 className={classes.textField}
-                value={topicDescription}
-                onChange={change.bind(this, 'topicDescription')}
+                value={description}
+                onChange={change.bind(this, 'description')}
             />
 
             <Field
-                name="availableAt"
+                name="schedule"
                 className={classes.textField}
                 component={DatePickerField}
             />

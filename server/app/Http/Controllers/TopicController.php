@@ -30,9 +30,9 @@ class TopicController extends Controller
 
         $validator = Validator::make($request->all(), [
 
-            'topic_name' => 'required|unique:topics,topic_name|string|max:100',
-            'topic_description' => 'required|unique:topics,topic_description|string|max:500',
-            'available_at' => 'required|date|date_format:Y-m-d H:i'
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:500',
+            'schedule' => 'required|date|date_format:Y-m-d H:i:s'
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +40,7 @@ class TopicController extends Controller
                 'message' => 'Validation failed',
                 'status' => 'failed',
                 'errors' => $validator->errors()
-            ]);
+            ], 422);
         }
         Topic::create($request->all());
 
@@ -88,9 +88,9 @@ class TopicController extends Controller
 
         $validator = Validator::make($request->all(), [
 
-            'topic_name' => 'required|string|max:100',
-            'topic_description' => 'required|string|max 500',
-            'available_at' => 'required|date_format:d/m/Y H:i:s'
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max 500',
+            'schedule' => 'required|date_format:Y/m/d H:i:s'
         ]);
 
         if ($validator->fails()) {
@@ -98,7 +98,7 @@ class TopicController extends Controller
                 'message' => 'Validation failed',
                 'status' => 'failed',
                 'errors' => $validator->errors()
-            ]);
+            ],422);
         }
 
         $model->update($request->all());

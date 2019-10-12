@@ -20,10 +20,10 @@ class CreateLessonsTable extends Migration
                 ->references('id')
                 ->on('topics')
                 ->onDelete('cascade');
-            $table->string('lesson_name');
-            $table->string('lesson_description');
-            $table->string('lesson_link');
-            $table->dateTime('available_at');
+            $table->string('name');
+            $table->longText('description');
+            $table->string('link');
+            $table->dateTime('schedule');
             $table->timestamps();
         });
     }
