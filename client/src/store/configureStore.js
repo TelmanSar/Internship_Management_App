@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import authReducer from '../reducers/authentication';
 import usersReducer from '../reducers/users';
 import topicsReducer from '../reducers/topics';
+import lessonsReducer from '../reducers/lessons';
 import editablesReducer from '../reducers/editables';
 import {runInterceptor}from '../general/config';
 
@@ -14,6 +15,7 @@ export default () => {
             auth: authReducer,
             users: usersReducer,
             topics: topicsReducer,
+            lessons: lessonsReducer,
             editables: editablesReducer
         }),
         applyMiddleware(thunk)

@@ -49,7 +49,6 @@ function UsersEditPage(props) {
         } = values;
         const updates = {name, lastname, email, password, role_id: generateRoleId(role)};
         props.startUpdateUser(id, updates);
-        props.history.push("/users");
     }
 
     const [values, setValues] = useState({});

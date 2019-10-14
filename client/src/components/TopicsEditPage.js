@@ -40,7 +40,6 @@ function TopicsEditPage(props) {
         } = values;
         const updates = {name, description, schedule};
         props.UpdateTopic(id, updates);
-        props.history.push("/topics");
     }
 
     const [values, setValues] = useState({});

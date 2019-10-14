@@ -12,7 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
-import {startGetTopics, startRemoveTopic} from "../actions/topics";
+import {startGetLessons, startRemoveLesson} from "../actions/lessons";
 import {connect} from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import ExpansionPanelActions from "@material-ui/core/ExpansionPanelActions";
@@ -30,13 +30,6 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'row',
         paddingBottom: theme.spacing(2),
         paddingTop: theme.spacing(2),
-    },
-    actions: {
-        color: theme.palette.text.secondary,
-        marginLeft: 'auto',
-    },
-    actionLesson: {
-        padding: theme.spacing(2),
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
@@ -61,15 +54,19 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-function TopicsList(props) {
+function LessonsList(props) {
     const role_id = localStorage.getItem('role_id');
+    const topic_id =  props.match.params.id;
+    console.log(topic_id);
+    
+
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
 
-    const startGetTopics = props.startGetTopics;
+    const startGetLessons = props.startGetLessons;
     useEffect(() => {
-        startGetTopics()
+        startGetLessons(topic_id)
     }, []);
 
     const handleChange = panel => (event, isExpanded) => {
@@ -83,61 +80,37 @@ function TopicsList(props) {
             <Paper>
                 <Container className={classes.listHeading}>
                     <Typography variant="h6">
-                        Topics available for you
+                        Lessons available for you
                     </Typography>
-                    { +role_id !== 3 && <div className={classes.actions}>
-                        <Tooltip title="Add topic">
-                            <Fab color="primary"
-                                 aria-label="add"
-                                 size="small"
-                                 component={Link}
-                                 to={'create_topic'}
-                            >
-                                <AddIcon/>
-                            </Fab>
-                        </Tooltip>
-                    </div> }
                 </Container>
                 {
-                    props.topics.map(topic => (
-                        <ExpansionPanel key={topic.id} expanded={expanded === `panel${topic.id}`}
-                                        onChange={handleChange(`panel${topic.id}`)}>
+                    props.lessons.map(lesson => (
+                        <ExpansionPanel key={lesson.id} expanded={expanded === `panel${lesson.id}`}
+                                        onChange={handleChange(`panel${lesson.id}`)}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMoreIcon/>}
-                                aria-controls={`panel${topic.id}bh-content`}
-                                id={`panel${topic.id}bh-header`}
+                                aria-controls={`panel${lesson.id}bh-content`}
+                                id={`panel${lesson.id}bh-header`}
                             >
-                                <Typography className={classes.heading}>{topic['name']}</Typography>
+                                <Typography className={classes.heading}>{lesson['name']}</Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
                                 <Typography className={classes.summaryContent}>
-                                    {topic['description']}
+                                    {lesson['description']}
                                 </Typography>
                                 <Divider/>
                                 <Typography variant="caption" className={classes.summaryLink}>
-                                    <Chip label="lessons" component={Link} className={classes.link} to={`/lessons/${topic.id}`}/>
-                                    { +role_id !== 3 && <div className={classes.actions}>
-                                        <Tooltip title="Add lesson">
-                                            <Fab color="primary"
-                                                 aria-label="add"
-                                                 size="small"
-                                                 component={Link}
-                                                 to={'create_lesson'}
-                                            >
-                                                <AddIcon/>
-                                            </Fab>
-                                        </Tooltip>
-                                    </div> }
+                                    <Chip label="Link to lesson" component="a" className={classes.link} href={`${lesson.link}`} clickable />
                                 </Typography>
                             </ExpansionPanelDetails>
                             <Divider/>
                             {+role_id !== 3 &&  <ExpansionPanelActions>
                                 <IconButton color="primary" component={Link}
-                                            to={`edit_topic/${topic.id}`}>
+                                            to={`edit_lesson/${lesson.id}`}>
                                     <EditIcon/>
                                 </IconButton>
                                 {+role_id === 1 && <IconButton color="secondary" onClick={() => {
-                                    props.startRemoveTopic(topic.id)
+                                    props.startRemoveLesson(lesson.id)
                                 }}>
                                     <DeleteIcon/>
                                 </IconButton>}
@@ -152,15 +125,15 @@ function TopicsList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        topics: state.topics
+        lessons: state.lessons
     };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    startGetTopics: () => dispatch(startGetTopics()),
-    startRemoveTopic: (id) => dispatch(startRemoveTopic({
+    startGetLessons: (topic_id) => dispatch(startGetLessons(topic_id)),
+    startRemoveLesson: (id) => dispatch(startRemoveLesson({
         id: id
     }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TopicsList);
+export default connect(mapStateToProps, mapDispatchToProps)(LessonsList);

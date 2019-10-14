@@ -48,7 +48,6 @@ function UsersAddPage(props) {
         } = values;
         const userCredentials = {name, lastname, email, password, role};
         props.startAddUser(userCredentials);
-        props.history.push("/users");
     }
 
     return (

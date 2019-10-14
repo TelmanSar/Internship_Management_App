@@ -10,12 +10,12 @@ class LessonController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $id
+     * @param $topic_id
      * @return void
      */
-    public function index($id)
+    public function index($topic_id)
     {
-        $model = Topic::query()->find($id);
+        $model = Topic::query()->find($topic_id);
         if (!$model) {
             return response()->json([
                 'message' => 'Topic does not exist',

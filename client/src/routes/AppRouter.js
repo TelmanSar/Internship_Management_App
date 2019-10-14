@@ -9,6 +9,8 @@ import UsersEditPage from '../components/UsersEditPage'
 import TopicsList from '../components/TopicsList';
 import TopicsAddPage from "../components/TopicsAddPage";
 import TopicsEditPage from "../components/TopicsEditPage";
+import LessonsList from "../components/LessonsList"
+import LessonsAddPage from "../components/LessonsAddPage"
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
@@ -26,6 +28,8 @@ const AppRouter = () => (
                 <PrivateRoute path="/topics" component={TopicsList}/>
                 <PrivateRoute path="/create_topic" component={TopicsAddPage}/>
                 <PrivateRoute path="/edit_topic/:id" component={TopicsEditPage}/>
+                <PrivateRoute path="/lessons/:id" component={LessonsList}/>
+                <PrivateRoute path="/create_lesson" component={LessonsAddPage}/>
             </Switch>
         </div>
     </Router>
