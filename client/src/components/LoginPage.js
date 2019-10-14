@@ -11,7 +11,7 @@ import LoginForm from './LoginForm'
 import {startLogin} from '../actions/authentication';
 import {Formik} from "formik";
 import {object as yupObject, string as yupString} from "yup";
-import Background from '../images/facebook_profile_image.png';
+import Background from '../images/login_page.jpg';
 
 
 const useStyles = makeStyles(theme => ({

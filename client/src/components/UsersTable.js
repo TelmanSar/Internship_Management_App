@@ -50,6 +50,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function UsersTable(props) {
+    const role_id = localStorage.getItem('role_id');
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -78,21 +79,21 @@ function UsersTable(props) {
                             Users
                         </Typography>
                     </div>
-                    <div className={classes.spacer}/>
-                    <div className={classes.actions}>
-                        <Tooltip title="Add user">
-                            <Fab color="primary"
-                                 aria-label="add"
-                                 className={classes.fab}
-                                 size="small"
-                                 component={Link}
-                                 to={'create_user'}
-                            >
-                                <AddIcon/>
-                            </Fab>
-                        </Tooltip>
-                    </div>
-                </Toolbar>
+                <div className={classes.spacer}/>
+                <div className={classes.actions}>
+                    <Tooltip title="Add user">
+                        <Fab color="primary"
+                             aria-label="add"
+                             className={classes.fab}
+                             size="small"
+                             component={Link}
+                             to={'create_user'}
+                        >
+                            <AddIcon/>
+                        </Fab>
+                    </Tooltip>
+                </div>
+            </Toolbar>
                 <div className={classes.tableWrapper}>
                     <Table stickyHeader>
                         <TableHead>
@@ -119,13 +120,13 @@ function UsersTable(props) {
                                             const value = row[column.id];
                                             if (column.id === 'action') {
                                                 return <TableCell key={column.id} style={{display: 'flex'}}>
-                                                        <IconButton color="primary" component={Link}
-                                                                    to={`edit_user/${row.id}`}>
-                                                            <EditIcon/>
-                                                        </IconButton>
-                                                        <IconButton color="secondary" onClick={removeUser}>
-                                                            <DeleteIcon/>
-                                                        </IconButton>
+                                                    <IconButton color="primary" component={Link}
+                                                                to={`edit_user/${row.id}`}>
+                                                        <EditIcon/>
+                                                    </IconButton>
+                                                    {+role_id === 1 && <IconButton color="secondary" onClick={removeUser}>
+                                                        <DeleteIcon/>
+                                                    </IconButton>}
                                                 </TableCell>
                                             } else {
                                                 return (

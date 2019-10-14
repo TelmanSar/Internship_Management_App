@@ -1,5 +1,6 @@
 import {API_BASE_URL} from '../general/config';
 import axios from 'axios';
+import {history} from "../routes/AppRouter";
 
 const addTopic = (topic) => ({
     type: 'ADD_TOPIC',
@@ -10,6 +11,9 @@ export const startAddTopic = (topic) => {
     return (dispatch) => {
         return axios.post(API_BASE_URL + '/topics', {...topic})
             .then(() => dispatch(addTopic({...topic})))
+            .then(() => {
+                history.push("/topics");
+            })
     }
 };
 
@@ -43,6 +47,8 @@ export const startUpdateTopic = (id, updates) => {
             ...updates
         }).then(() => {
             dispatch(updateTopic(id, updates));
+        }).then(() => {
+            history.push("/topics");
         });
     };
 };

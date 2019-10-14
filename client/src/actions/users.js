@@ -1,5 +1,7 @@
 import {API_BASE_URL} from '../general/config';
 import axios from 'axios';
+import {history} from "../routes/AppRouter";
+
 
 const addUser = (user) => ({
     type: 'ADD_USER',
@@ -10,6 +12,9 @@ export const startAddUser = (user) => {
     return (dispatch) => {
         return axios.post(API_BASE_URL + '/users', {...user})
             .then(() => dispatch(addUser({...user})))
+            .then(() => {
+                history.push("/users");
+            });
     }
 };
 
@@ -43,6 +48,8 @@ export const startUpdateUser = (id, updates) => {
              ...updates
         }).then(() => {
             dispatch(updateUser(id, updates));
+        }).then(() => {
+            history.push("/users");
         });
     };
 };

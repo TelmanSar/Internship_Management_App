@@ -12,6 +12,7 @@ import MenuBookSharpIcon from '@material-ui/icons/MenuBookSharp';
 import PeopleAltSharpIcon from '@material-ui/icons/PeopleAltSharp';
 import HomeIcon from '@material-ui/icons/Home';
 
+
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -30,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Sidebar(props) {
     const classes = useStyles();
-    const role = "admin";
+    const role_id = localStorage.getItem('role_id');
 
 const pathname = props.location.pathname
     const drawer = (
@@ -38,7 +39,7 @@ const pathname = props.location.pathname
             <div className={classes.toolbar}/>
             <Divider/>
 
-            {(role === 'admin' || role === "superAdmin") ? (
+            {(role_id === '1' || role_id === "2") ? (
                     <List>
                         <ListItem button key={'Home'} component={Link} to='/home'  selected={'/home'===pathname}>
                             <ListItemIcon><HomeIcon/></ListItemIcon>
@@ -55,7 +56,11 @@ const pathname = props.location.pathname
                     </List>)
                 :
                 <List>
-                    <ListItem button key="Topics">
+                    <ListItem button key={'Home'} component={Link} to='/home'  selected={'/home'===pathname}>
+                        <ListItemIcon><HomeIcon/></ListItemIcon>
+                        <ListItemText primary='Home'/>
+                    </ListItem>
+                    <ListItem  button key="Topics" component={Link} to='/topics' selected={'/topics'===pathname}>
                         <ListItemIcon><MenuBookSharpIcon/></ListItemIcon>
                         <ListItemText primary="Topics"/>
                     </ListItem>
