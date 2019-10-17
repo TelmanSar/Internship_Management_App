@@ -6,6 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import {Link }from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import {startLogOut} from "../actions/authentication";
+import {connect} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -20,12 +23,13 @@ const useStyles = makeStyles(theme => ({
     homeButton: {
         color:'inherit',
         textDecoration: 'none'
-
-    }
+    },
+    title: {
+        flexGrow: 1,
+    },
 }));
 
-//TODO: add logout button
-export default function Header(props) {
+function Header(props) {
     const classes = useStyles();
 
     return (
@@ -40,13 +44,20 @@ export default function Header(props) {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
+                <Typography variant="h6" noWrap className={classes.title}>
                     <Link className={classes.homeButton} to='/home' >Fluxify</Link>
                 </Typography>
+                <Button onClick={props.startLogOut} color="inherit">Logout</Button>
             </Toolbar>
         </AppBar>
     );
 }
 
+const mapDispatchToProps = dispatch => {
+    return ({
+        startLogOut: () => dispatch(startLogOut())
+    })
+};
+export default connect(null, mapDispatchToProps)(Header)
 
 

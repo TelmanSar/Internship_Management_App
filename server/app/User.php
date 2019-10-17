@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
@@ -39,6 +39,21 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function checkPermission($permission)
+    {
+        $role_id = auth()->user()->role_id;
+       if(Role::query()->find($role_id)->permissions->where('slug',$permission)->first()){
+           return true;
+       };
+       return false;
+
+
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

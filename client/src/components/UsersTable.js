@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import {userColumns} from '../data/columns';
+import {userColumns} from '../general/columns';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
     actions: {
         color: theme.palette.text.secondary,
     },
+    fab: {
+        margin: theme.spacing(2),
+    },
     tableWrapper: {
         overflow: 'auto',
         width: '100%'
@@ -43,13 +46,11 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
-    fab: {
-        margin: theme.spacing(2),
-    },
     toolbar: theme.mixins.toolbar,
 }));
 
 function UsersTable(props) {
+    const role_id = localStorage.getItem('role_id');
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -78,20 +79,21 @@ function UsersTable(props) {
                             Users
                         </Typography>
                     </div>
-                    <div className={classes.spacer}/>
-                    <div className={classes.actions}>
-                        <Tooltip title="Add user">
-                            <Fab color="primary"
-                                 aria-label="add"
-                                 className={classes.fab}
-                                 size="small" component={Link}
-                                 to={'create_user'}
-                            >
-                                <AddIcon/>
-                            </Fab>
-                        </Tooltip>
-                    </div>
-                </Toolbar>
+                <div className={classes.spacer}/>
+                <div className={classes.actions}>
+                    <Tooltip title="Add user">
+                        <Fab color="primary"
+                             aria-label="add"
+                             className={classes.fab}
+                             size="small"
+                             component={Link}
+                             to={'create_user'}
+                        >
+                            <AddIcon/>
+                        </Fab>
+                    </Tooltip>
+                </div>
+            </Toolbar>
                 <div className={classes.tableWrapper}>
                     <Table stickyHeader>
                         <TableHead>
@@ -118,13 +120,13 @@ function UsersTable(props) {
                                             const value = row[column.id];
                                             if (column.id === 'action') {
                                                 return <TableCell key={column.id} style={{display: 'flex'}}>
-                                                        <IconButton color="primary" component={Link}
-                                                                    to={`edit_user/${row.id}`}>
-                                                            <EditIcon/>
-                                                        </IconButton>
-                                                        <IconButton color="secondary" onClick={removeUser}>
-                                                            <DeleteIcon/>
-                                                        </IconButton>
+                                                    <IconButton color="primary" component={Link}
+                                                                to={`edit_user/${row.id}`}>
+                                                        <EditIcon/>
+                                                    </IconButton>
+                                                    {+role_id === 1 && <IconButton color="secondary" onClick={removeUser}>
+                                                        <DeleteIcon/>
+                                                    </IconButton>}
                                                 </TableCell>
                                             } else {
                                                 return (

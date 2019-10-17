@@ -10,8 +10,7 @@ const useStyles = makeStyles(theme => ({
         flexDirection: "column"
     },
     textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
+        margin: theme.spacing(1),
         flexGrow: 1
     },
     menu: {
@@ -35,7 +34,7 @@ export default function UserForm(props) {
     const classes = useStyles();
 
     const change = (name, e) => {
-        e.preventDefault()
+        e.preventDefault();
         e.persist();
         handleChange(e);
         setFieldTouched(name, true, false);

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {Route, Redirect} from 'react-router-dom';
 import Sidebar from "../components/Sidebar";
 import Header from '../components/Header';
 import {makeStyles} from "@material-ui/core";
@@ -12,11 +12,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const PrivateRoute = ({
-                                 token,
-                                 component: Component,
-                                 ...rest
-                             }) => {
+const PrivateRoute = ({
+                          isAuthenticated,
+                          component: Component,
+                          ...rest
+                      }) => {
 
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -25,27 +25,26 @@ export const PrivateRoute = ({
     };
 
     const classes = useStyles();
-
     return <Route {...rest} component={(props) => (
-        // true ? (
+        localStorage.getItem('access-token') ? (
             <div className={classes.root}>
                 <Header handleDrawerToggle={handleDrawerToggle}
                         mobileOpen={mobileOpen}/>
                 <Sidebar
                     handleDrawerToggle={handleDrawerToggle}
                     mobileOpen={mobileOpen}
+                    {...props}
                 />
                 <Component {...props} />
-
             </div>
-        // ) : (
-        //     <Redirect to="/" />
-        // )
-    )} />
+        ) : (
+            <Redirect to="/"/>
+        )
+    )}/>
 };
 
 const mapStateToProps = (state) => ({
-    token: !!state.token
+    isAuthenticated: !!state.auth.id
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

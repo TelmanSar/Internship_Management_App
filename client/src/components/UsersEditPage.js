@@ -5,7 +5,8 @@ import UserForm from './UserForm';
 import {object as yupObject, string as yupString} from "yup";
 import {connect} from "react-redux";
 import {startUpdateUser} from "../actions/users";
-import {startGetUser} from "../actions/currentUser";
+import {startGetUser} from "../actions/editables";
+import {getRoleFromId, generateRoleId} from '../general/helpers';
 
 
 const useStyles = makeStyles(theme => ({
@@ -31,10 +32,10 @@ const validationSchema = yupObject({
 
 function UsersEditPage(props) {
     const classes = useStyles();
-    const userID = +props.match.params.id;
+    const userId = +props.match.params.id;
     const getUser = props.startGetUser;
     useEffect(() => {
-        getUser(userID);
+        getUser(userId);
     }, []);
 
     function handleSubmit(values) {
@@ -46,19 +47,18 @@ function UsersEditPage(props) {
             password,
             role
         } = values;
-        const updates = {name, lastname, email, password, role};
+        const updates = {name, lastname, email, password, role_id: generateRoleId(role)};
         props.startUpdateUser(id, updates);
-        props.history.push("/users");
     }
 
-    const [values, setValues] = useState(false);
+    const [values, setValues] = useState({});
 
     useEffect(() => {
-        setValues(props.user);
+        setValues({...props.user, password: "", role: getRoleFromId(props.user['role_id'])});
     }, [props.user]);
 
     return (
-        < main
+    < main
             className={classes.content}>
             < div
                 className={classes.toolbar}
@@ -70,7 +70,6 @@ function UsersEditPage(props) {
                         initialValues={values}
                         validationSchema={validationSchema}
                         onSubmit={values => handleSubmit(values)}
-                        isInitialValid={true}
                         render={props => <UserForm {...props} buttonValue={'Update'}/>}
                     />
                 )
@@ -80,14 +79,14 @@ function UsersEditPage(props) {
     )
 }
 
-const mapStateToProps = (state) => ({
-    user: state.user
-
-});
+const mapStateToProps = (state) => {
+    return({
+    user: state.editables.user
+})};
 
 const mapDispatchToProps = dispatch => ({
     startUpdateUser: (id, updates) => dispatch(startUpdateUser(id, updates)),
-    startGetUser: userID => dispatch(startGetUser(userID))
+    startGetUser: userId => dispatch(startGetUser(userId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersEditPage);

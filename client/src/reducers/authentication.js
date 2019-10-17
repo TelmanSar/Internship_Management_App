@@ -1,3 +1,10 @@
 export default (state = {}, action = {}) => {
-           return { token: action.token };
+    switch (action.type) {
+        case 'LOGIN_USER':
+            return { ...action.authenticatedUser };
+        case 'LOGOUT_USER':
+            return { };
+        default:
+            return state;
+    }
 };

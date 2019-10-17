@@ -13,16 +13,16 @@ class TopicsTableSeeder extends Seeder
     public function run()
     {
         DB::table('topics')->insert([
-            'topic_name' => "PHP basics",
-            'topic_description' => 'This topic contains fundamentals of PHP',
-            'available_at' => '2020-11-02 20:10:10',
+            'name' => "PHP basics",
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at cum eum excepturi exercitationem expedita harum illum inventore itaque molestias nam neque officiis pariatur praesentium, qui quo sequi veritatis voluptatem.',
+            'schedule' => '2020-11-02 20:10:10',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);
         DB::table('topics')->insert([
-            'topic_name' => "MYSQL",
-            'topic_description' => 'This topic contains fundamentals of MYSQL',
-            'available_at' => '2021-11-02 20:10:10',
+            'name' => "MYSQL",
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci at cum eum excepturi exercitationem expedita harum illum inventore itaque molestias nam neque officiis pariatur praesentium, qui quo sequi veritatis voluptatem.',
+            'schedule' => '2021-11-02 20:10:10',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);

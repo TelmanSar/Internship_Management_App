@@ -12,23 +12,21 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-
         DB::table('users')->insert([
             'name' => "Telman",
             'lastname' => "Saroyan",
-            'email' => "telmans.aroyan@gmail.com",
-            'password' => '123456qwerty',
-            'role' => 'intern',
+            'email' => "telman.saroyan@gmail.com",
+            'password' => Hash::make('123456qwerty'),
+            'role_id' => '3',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);
         DB::table('users')->insert([
             'name' => "Levon",
             'lastname' => "Ayvazyan",
-            'email' => "levonayvazyan@gmail.com",
-            'password' => 'qwerty1234',
-            'role' => 'intern',
+            'email' => "levon.ayvazyan@gmail.com",
+            'password' => Hash::make('qwerty1234'),
+            'role_id' => '3',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);
@@ -36,8 +34,8 @@ class UsersTableSeeder extends Seeder
             'name' => "Armen",
             'lastname' => "Mshetsyan",
             'email' => "armen.mshetsyan@gmail.com",
-            'password' => 'qwerty',
-            'role' => 'admin',
+            'password' => Hash::make('qwerty111111'),
+            'role_id' => '1',
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' =>\Carbon\Carbon::now()->toDateTimeString()
         ]);
